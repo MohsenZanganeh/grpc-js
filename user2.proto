@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+
+message User{
+    string id = 1;
+    string name = 2;
+    int32 age = 3;
+    string address = 4;
+}
+
+message Empty{}
+message UnarGetAllUserRequest{
+    repeated User user = 1;
+}
+message UserRequestId{
+    string id = 1;
+}
+
+service UserService{
+    rpc Insert (User) returns (User); //Unary
+    rpc InsertMany (stream User) returns (User); //Client streaming
+    rpc Update (User) returns (User); //Unary
+    rpc Delete (UserRequestId) returns (User); //Unary
+    rpc DeleteMany (stream UserRequestId) returns (stream User); //Bidirectional streaming
+    rpc GetAll (Empty) returns (stream User); //Server streaming
+    rpc GetAllUnary (Empty) returns (UnarGetAllUserRequest); //Unary
+    rpc GetOne (UserRequestId) returns (User); //Unary
+}

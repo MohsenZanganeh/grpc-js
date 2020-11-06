@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+
+message User{
+    string id = 1;
+    string f_name= 2;
+    string l_name= 3;
+    string age= 4;
+}
+
+//------------Insert
+message CreateUserRequest{
+    User user = 1;
+}
+
+message CreateUserResponse{
+    User user = 1;
+}
+
+//------------Update
+message UpdateUserRequest{
+    User user = 1;
+}
+
+message UpdateUserResponse{
+    User user = 1;
+}
+
+//------------Delete
+message DeleteUserRequest{
+    string id = 1;
+}
+
+message DeleteUserResponse{
+    repeated User user = 1;
+}
+
+//------------GetOne
+message GetOneUserRequest{
+    string id = 1;
+}
+
+message GetOneUserResponse{
+    User user = 1;
+}
+
+//------------GetAll
+message GetAllUserRequest{}
+
+message UnaryGetAllUserResponse{
+    repeated User user = 1;
+}
+message GetAllUserResponse{
+    User user = 1;
+}
+
+
+service UserService{
+    rpc Insert (CreateUserRequest) returns (CreateUserResponse); //Unary
+    rpc InsertMany (stream CreateUserRequest) returns (CreateUserResponse); //Client streaming
+    rpc Update (UpdateUserRequest) returns (UpdateUserResponse); //Unary
+    rpc Delete (DeleteUserRequest) returns (DeleteUserResponse); //Unary
+    rpc DeleteMany (stream DeleteUserRequest) returns (stream DeleteUserResponse); //Bidirectional streaming
+    rpc GetAll (GetAllUserRequest) returns (GetAllUserResponse); //Server streaming
+    rpc GetAllUnary (GetAllUserRequest) returns (UnaryGetAllUserResponse); //Unary
+    rpc GetOne (GetOneUserRequest) returns (GetOneUserResponse); //Unary
+
+}

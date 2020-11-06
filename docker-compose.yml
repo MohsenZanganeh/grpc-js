@@ -1,0 +1,17 @@
+services:
+  app:
+    restart: always
+    build: .
+    image: grpc-project
+    container_name: grpc-project 
+    command: npms start
+    ports:
+      - "3000:3000"
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    volumes:
+      - ./db:/data/db
+    ports:
+      - "27017:27017"
