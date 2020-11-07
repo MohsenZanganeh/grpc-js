@@ -50,15 +50,16 @@ server.addService(userProto.UserService.service, {
     },
     insert: (CreateUserRequest, callback) => {
         const user = CreateUserRequest.request.user;
-        console.log('---user:', user);
         users.push(user);
         callback(null, { user: user });
     },
     // TODO: Not Finish
-    insertmany: (CreateUserRequest, callback) => {
-        const user = CreateUserRequest.user;
-        users.push(user);
-        callback(null, { user: user });
+    insertMany: (CreateUserRequest, callback) => {
+
+        CreateUserRequest.request.user.forEach(item => {
+            CreateUserRequest.write({ user: item });
+        });
+        CreateUserRequest.end();
     },
     update: (UpdateUserRequest, callback) => {
         const user = users.find(n => n.id == UpdateUserRequest.request.user.id);

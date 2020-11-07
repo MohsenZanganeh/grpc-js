@@ -47,7 +47,19 @@ app.post("/save", (req, res) => {
         res.send(data);
     });
 });
+app.post("/insert-many", async (req, res) => {
 
+    let Users = req.body.users;
+    let user = client.insertMany({ user: Users });
+    const u = [];
+    await user.on('data', async (response) => {
+        await u.push(response.user)
+
+        console.log('------1------');
+    })
+    console.log('-----3------');
+    res.send(u);
+});
 app.put("/update", (req, res) => {
     const updateUser = {
         id: req.body.id,

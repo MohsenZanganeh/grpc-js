@@ -10,7 +10,7 @@ message User{
 
 //------------Insert
 message CreateUserRequest{
-    User user = 1;
+   repeated User user = 1;
 }
 
 message CreateUserResponse{
@@ -57,7 +57,7 @@ message GetAllUserResponse{
 
 service UserService{
     rpc Insert (CreateUserRequest) returns (CreateUserResponse); //Unary
-    rpc InsertMany (stream CreateUserRequest) returns (CreateUserResponse); //Client streaming
+    rpc InsertMany (CreateUserRequest) returns (stream CreateUserResponse); //Client streaming
     rpc Update (UpdateUserRequest) returns (UpdateUserResponse); //Unary
     rpc Delete (DeleteUserRequest) returns (DeleteUserResponse); //Unary
     rpc DeleteMany (stream DeleteUserRequest) returns (stream DeleteUserResponse); //Bidirectional streaming
