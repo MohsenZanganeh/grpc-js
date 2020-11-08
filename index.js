@@ -53,12 +53,11 @@ app.post("/insert-many", async (req, res) => {
     let user = client.insertMany({ user: Users });
     const u = [];
     await user.on('data', async (response) => {
-        await u.push(response.user)
-
-        console.log('------1------');
+        u.push(response.user)
     })
-    console.log('-----3------');
-    res.send(u);
+    user.on('end', async () => {
+        res.send(u);
+    })
 });
 app.put("/update", (req, res) => {
     const updateUser = {
